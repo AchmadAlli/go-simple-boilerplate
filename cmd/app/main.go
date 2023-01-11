@@ -3,12 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"os"
 	"os/signal"
 	"time"
 
 	"github.com/achmadAlli/go-simple-boilerplate/config"
+	"github.com/achmadAlli/go-simple-boilerplate/interfaces/api"
 	"github.com/labstack/echo/v4"
 )
 
@@ -17,9 +17,8 @@ func main() {
 
 	e := echo.New()
 
-	e.GET("/check", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, "server is healthy")
-	})
+	// register the route
+	api.RegisterRoute(e)
 
 	go func() {
 		host := fmt.Sprintf("%s:%d", config.GetEnv().Address, config.GetEnv().Port)
