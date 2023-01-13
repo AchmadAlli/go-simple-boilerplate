@@ -7,8 +7,8 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/achmadAlli/go-simple-boilerplate/adapters/api"
 	"github.com/achmadAlli/go-simple-boilerplate/config"
-	"github.com/achmadAlli/go-simple-boilerplate/interfaces/api"
 	"github.com/labstack/echo/v4"
 )
 

@@ -3,8 +3,8 @@ package api
 import (
 	"net/http"
 
-	"github.com/achmadAlli/go-simple-boilerplate/interfaces/api/utils"
-	v1 "github.com/achmadAlli/go-simple-boilerplate/interfaces/api/v1"
+	"github.com/achmadAlli/go-simple-boilerplate/adapters/api/utils"
+	v1 "github.com/achmadAlli/go-simple-boilerplate/adapters/api/v1/routes"
 	"github.com/labstack/echo/v4"
 )
 
@@ -18,5 +18,5 @@ func RegisterRoute(e *echo.Echo) {
 
 	api.Static("/docs", "docs/swagger-ui")
 
-	v1.RegisterV1(gv1)
+	v1.Routes(gv1)
 }
