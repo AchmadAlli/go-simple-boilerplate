@@ -18,7 +18,7 @@ func NewSwaggerHandler() *SwaggerHandler {
 	return &SwaggerHandler{}
 }
 
-func (h SwaggerHandler) Swagger(c echo.Context) error {
+func (h SwaggerHandler) SpecDocs(c echo.Context) error {
 
 	reader, err := os.Open("./docs/swagger/app.v1.swagger.json")
 
