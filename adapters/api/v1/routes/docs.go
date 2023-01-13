@@ -6,15 +6,17 @@ import (
 )
 
 type CommonRoute struct {
-	handler *handler.SwaggerHandler
+	swaggerHandler *handler.SwaggerHandler
 }
 
-func NewCommonRoute() *CommonRoute {
+func NewCommonRoute(
+	swaggerHandler *handler.SwaggerHandler,
+) *CommonRoute {
 	return &CommonRoute{
-		handler: handler.NewSwaggerHandler(),
+		swaggerHandler: swaggerHandler,
 	}
 }
 
 func (r CommonRoute) Register(g *echo.Group) {
-	g.GET("/swagger", r.handler.Swagger)
+	g.GET("/swagger", r.swaggerHandler.SpecDocs)
 }
