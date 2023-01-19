@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/achmadAlli/go-simple-boilerplate/adapters/api/utils"
-	"github.com/achmadAlli/go-simple-boilerplate/internal/constants"
+	"github.com/achmadAlli/go-simple-boilerplate/domain/constants"
 	"github.com/labstack/echo/v4"
 )
 
