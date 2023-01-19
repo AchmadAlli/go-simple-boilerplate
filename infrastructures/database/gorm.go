@@ -8,11 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type gormInstance struct {
-	db *gorm.DB
-}
-
-func NewMysqlInstance(env config.MySQLEnv) (*gormInstance, error) {
+func NewMysqlInstance(env config.MySQLEnv) *gorm.DB {
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
 		env.Username,
@@ -44,7 +40,5 @@ func NewMysqlInstance(env config.MySQLEnv) (*gormInstance, error) {
 		instance = instance.Debug()
 	}
 
-	return &gormInstance{
-		db: instance,
-	}, nil
+	return instance
 }
