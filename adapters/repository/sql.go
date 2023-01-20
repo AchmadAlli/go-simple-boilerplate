@@ -6,6 +6,5 @@ type Transaction interface {
 	Begin(context.Context) Transaction
 	Commit()
 	Rollback()
-	FromContext(context.Context) interface{}
-	FromContextWithTrashed(context.Context) interface{}
+	FromContext(ctx context.Context, key string) interface{}
 }

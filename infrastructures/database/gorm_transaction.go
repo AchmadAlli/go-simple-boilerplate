@@ -8,18 +8,18 @@ import (
 )
 
 type gormTransaction struct {
-	ctx context.Context
-	db  *gorm.DB
+	db *gorm.DB
 }
 
-func NewTransaction() repository.Transaction {
-	return &gormTransaction{}
+func NewTransaction(db *gorm.DB) repository.Transaction {
+	return &gormTransaction{
+		db: db,
+	}
 }
 
 func (trx *gormTransaction) Begin(ctx context.Context) repository.Transaction {
 	return &gormTransaction{
-		ctx: ctx,
-		db:  trx.db.Begin(),
+		db: trx.db.Begin(),
 	}
 }
 
@@ -32,8 +32,9 @@ func (trx *gormTransaction) Rollback() {
 	trx.db.Rollback()
 }
 
-func (trx *gormTransaction) FromContext(ctx context.Context) interface{} {
-	val := ctx.Value(trx.ctx)
+func (trx *gormTransaction) FromContext(ctx context.Context, key string) interface{} {
+	val := ctx.Value(key)
+
 	if val == nil {
 		return trx.db
 	}
@@ -44,18 +45,4 @@ func (trx *gormTransaction) FromContext(ctx context.Context) interface{} {
 	}
 
 	return fromContext.db
-}
-
-func (trx *gormTransaction) FromContextWithTrashed(ctx context.Context) interface{} {
-	val := ctx.Value(trx.ctx)
-	if val == nil {
-		return trx.db.Unscoped()
-	}
-
-	fromContext, ok := val.(*gormTransaction)
-	if !ok {
-		return trx.db.Unscoped()
-	}
-
-	return fromContext.db.Unscoped()
 }
