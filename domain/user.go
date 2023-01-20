@@ -27,11 +27,12 @@ type UserRepository interface {
 
 func NewUser(email string, pass string) User {
 	now := time.Now()
+	saltedPass, _ := Hash([]byte(pass), 8)
 
 	return User{
 		id:        UserID(NewUUID()),
 		email:     email,
-		password:  pass,
+		password:  string(saltedPass),
 		createdAt: &now,
 		updatedAt: &now,
 	}

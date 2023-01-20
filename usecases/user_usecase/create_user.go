@@ -53,6 +53,13 @@ func NewCrateUserUsecase(
 	}
 }
 
-func (uc createUserOrchestrator) CreateUser(context.Context, CreateUserInput) (CreateUserOutput, error) {
-	return CreateUserOutput{}, nil
+func (uc createUserOrchestrator) CreateUser(ctx context.Context, payload CreateUserInput) (CreateUserOutput, error) {
+	userPayload := domain.NewUser(payload.Email, payload.Password)
+	user, err := uc.userRepo.Store(ctx, userPayload)
+
+	if err != nil {
+		return uc.presenter.PresentCreatedUser(user), err
+	}
+
+	return uc.presenter.PresentCreatedUser(user), nil
 }
