@@ -18,7 +18,7 @@ type User struct {
 }
 
 type UserRepository interface {
-	Store(context.Context, User) User
+	Store(context.Context, User) (User, error)
 	Fetch(context.Context) ([]User, error)
 	Find(context.Context, User) (User, error)
 	Update(context.Context, User) error
@@ -51,6 +51,10 @@ func (d *User) GetUsername() string {
 
 func (d *User) GetEmail() string {
 	return d.email
+}
+
+func (d *User) GetPassword() string {
+	return d.password
 }
 
 func (d *User) GetCreationDate() *time.Time {

@@ -2,14 +2,27 @@ package sql
 
 import (
 	"context"
+	"time"
 
 	"github.com/achmadAlli/go-simple-boilerplate/adapters/repository"
 	"github.com/achmadAlli/go-simple-boilerplate/domain"
+	"gorm.io/gorm"
 )
 
 const (
-	USER_CONTEXT = "user_transaction"
+	CONTEXT_CREATE_USER = "create_user_transaction"
+	CONTEXT_UPDATE_USER = "update_user_transaction"
 )
+
+type userModel struct {
+	id        string     `gorm:"column:id"`
+	name      string     `gorm:"column:name"`
+	username  string     `gorm:"column:username"`
+	email     string     `gorm:"column:email"`
+	password  string     `gorm:"column:password"`
+	createdAt *time.Time `gorm:"column:created_at"`
+	updatedAt *time.Time `gorm:"column:updated_at"`
+}
 
 type UserRepository struct {
 	db repository.Transaction
@@ -21,8 +34,23 @@ func NewUserRepository(db repository.Transaction) domain.UserRepository {
 	}
 }
 
-func (r *UserRepository) Store(ctx context.Context, User domain.User) domain.User {
-	return domain.User{}
+func newUserModel(user domain.User) userModel {
+	return userModel{
+		id:        string(user.GetID()),
+		name:      user.GetName(),
+		username:  user.GetUsername(),
+		email:     user.GetEmail(),
+		password:  user.GetPassword(),
+		createdAt: user.GetCreationDate(),
+		updatedAt: user.GetUpdateDate(),
+	}
+}
+
+func (r *UserRepository) Store(ctx context.Context, user domain.User) (domain.User, error) {
+	payload := newUserModel(user)
+	err := r.db.FromContext(ctx, CONTEXT_CREATE_USER).(*gorm.DB).Create(&payload).Error
+
+	return user, err
 }
 func (r *UserRepository) Fetch(ctx context.Context) ([]domain.User, error) {
 	return []domain.User{}, nil
