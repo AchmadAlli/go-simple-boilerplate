@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/achmadAlli/go-simple-boilerplate/adapters/api/utils"
-	"github.com/achmadAlli/go-simple-boilerplate/domain/constants"
 	"github.com/labstack/echo/v4"
 )
 
@@ -31,7 +30,7 @@ func (h SwaggerHandler) SpecDocs(c echo.Context) error {
 	bytesDocs, err := ioutil.ReadAll(reader)
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, utils.NewResponse(nil, constants.ErrInternalServiceError.Error()))
+		return c.JSON(http.StatusInternalServerError, utils.NewResponse(nil, utils.ErrInternalServiceError.Error()))
 	}
 
 	var result map[string]interface{}
