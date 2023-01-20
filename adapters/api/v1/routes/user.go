@@ -18,7 +18,7 @@ func NewUserRoute(handler *handler.UserHandler) *userRoute {
 func (r *userRoute) Register(g *echo.Group) {
 	g.POST("/users", r.userHandler.Store)
 	g.GET("/users", r.userHandler.Fetch)
-	g.GET("/users/{id}", r.userHandler.Find)
-	g.PUT("/user/{id}", r.userHandler.Update)
-	g.DELETE("/users/{id}", r.userHandler.Destroy)
+	g.GET("/users/:id", r.userHandler.Find)
+	g.PUT("/user/:id", r.userHandler.Update)
+	g.DELETE("/users/:id", r.userHandler.Destroy)
 }

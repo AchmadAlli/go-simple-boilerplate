@@ -27,7 +27,15 @@ func (h UserHandler) Store(ctx echo.Context) error {
 }
 
 func (h UserHandler) Find(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, utils.NewResponse(nil, "ok"))
+	id := ctx.Param("id")
+
+	user, err := h.fetchUsecase.FindUser(ctx.Request().Context(), id)
+
+	if err != nil {
+		return err
+	}
+
+	return ctx.JSON(http.StatusOK, utils.NewResponse(user, "ok"))
 }
 func (h UserHandler) Fetch(ctx echo.Context) error {
 

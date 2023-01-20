@@ -29,13 +29,16 @@ type FetchUserOutput struct {
 }
 
 type fetchUserOrchestrator struct {
-	userRepo  interface{}
+	userRepo  domain.UserRepository
 	presenter FetchUserPresenter
 }
 
-func NewFetchUserUsecase(presenter FetchUserPresenter) FetchUserUsecase {
+func NewFetchUserUsecase(
+	presenter FetchUserPresenter,
+	userRepo domain.UserRepository,
+) FetchUserUsecase {
 	return &fetchUserOrchestrator{
-		userRepo:  nil,
+		userRepo:  userRepo,
 		presenter: presenter,
 	}
 }

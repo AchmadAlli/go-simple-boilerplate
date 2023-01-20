@@ -39,15 +39,16 @@ type CreateUserOutputV2 struct {
 }
 
 type createUserOrchestrator struct {
-	userRepo  interface{}
+	userRepo  domain.UserRepository
 	presenter CreateUserPresenter
 }
 
 func NewCrateUserUsecase(
 	presenter CreateUserPresenter,
+	userRepo domain.UserRepository,
 ) CreateUserUsecase {
 	return &createUserOrchestrator{
-		userRepo:  nil,
+		userRepo:  userRepo,
 		presenter: presenter,
 	}
 }
