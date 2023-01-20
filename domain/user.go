@@ -29,7 +29,7 @@ func NewUser(email string, pass string) User {
 	now := time.Now()
 
 	return User{
-		id:        "test",
+		id:        UserID(NewUUID()),
 		email:     email,
 		password:  pass,
 		createdAt: &now,
@@ -54,13 +54,19 @@ func (d *User) GetEmail() string {
 }
 
 func (d *User) SetName(name string) {
+	now := time.Now()
 	d.name = name
+	d.createdAt = &now
 }
 
 func (d *User) SetUsername(username string) {
+	now := time.Now()
 	d.username = username
+	d.createdAt = &now
 }
 
-func (d *User) Setpassword(pass string) {
+func (d *User) SetPassword(pass string) {
+	now := time.Now()
 	d.password = pass
+	d.createdAt = &now
 }
