@@ -38,13 +38,15 @@ type CreateUserOutputV2 struct {
 
 type createUserOrchestrator struct {
 	userRepo  interface{}
-	presenter interface{}
+	presenter CreateUserPresenter
 }
 
-func NewCrateUserUsecase() CreateUserUsecase {
+func NewCrateUserUsecase(
+	presenter CreateUserPresenter,
+) CreateUserUsecase {
 	return &createUserOrchestrator{
 		userRepo:  nil,
-		presenter: nil,
+		presenter: presenter,
 	}
 }
 

@@ -8,8 +8,9 @@ import (
 
 func ProvideUserHandler() *handler.UserHandler {
 	fetchPresenter := user_presenters.NewFetchUserPresenter()
+	creationPresenter := user_presenters.NewCreateUserPresenter()
 
-	createUserUsecase := user_usecase.NewCrateUserUsecase()
+	createUserUsecase := user_usecase.NewCrateUserUsecase(creationPresenter)
 	fetchUserUsecase := user_usecase.NewFetchUserUsecase(fetchPresenter)
 
 	return handler.NewUserHandler(
