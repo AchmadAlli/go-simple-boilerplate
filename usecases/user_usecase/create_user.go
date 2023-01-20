@@ -2,6 +2,8 @@ package user_usecase
 
 import (
 	"context"
+
+	"github.com/achmadAlli/go-simple-boilerplate/domain"
 )
 
 type CreateUserUsecase interface {
@@ -9,8 +11,8 @@ type CreateUserUsecase interface {
 }
 
 type CreateUserPresenter interface {
-	PresentCreatedUser() CreateUserOutput
-	PresentCreatedUserV2() CreateUserOutputV2
+	PresentCreatedUser(user domain.User) CreateUserOutput
+	PresentCreatedUserV2(user domain.User) CreateUserOutputV2
 }
 
 type CreateUserInput struct {
@@ -23,7 +25,6 @@ type CreateUserOutput struct {
 	Name      string `json:"name"`
 	Username  string `json:"username"`
 	Email     string `json:"email"`
-	Password  string `json:"-"`
 	CreatedAt string `json:"created_at"`
 }
 
@@ -34,6 +35,7 @@ type CreateUserOutputV2 struct {
 	Email     string `json:"email"`
 	Password  string `json:"-"`
 	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
 
 type createUserOrchestrator struct {

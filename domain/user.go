@@ -53,6 +53,14 @@ func (d *User) GetEmail() string {
 	return d.email
 }
 
+func (d *User) GetCreationDate() *time.Time {
+	return d.createdAt
+}
+
+func (d *User) GetUpdateDate() *time.Time {
+	return d.updatedAt
+}
+
 func (d *User) SetName(name string) {
 	now := time.Now()
 	d.name = name

@@ -2,6 +2,8 @@ package user_usecase
 
 import (
 	"context"
+
+	"github.com/achmadAlli/go-simple-boilerplate/domain"
 )
 
 type FetchUserUsecase interface {
@@ -10,8 +12,8 @@ type FetchUserUsecase interface {
 }
 
 type FetchUserPresenter interface {
-	PresentUser() FetchUserOutput
-	PresentUsers() []FetchUserOutput
+	PresentUser(user domain.User) FetchUserOutput
+	PresentUsers(users []domain.User) []FetchUserOutput
 }
 
 type FetchUserInput struct {
