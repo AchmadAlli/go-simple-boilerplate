@@ -6,10 +6,13 @@ import (
 	"github.com/achmadAlli/go-simple-boilerplate/adapters/repository/sql"
 	"github.com/achmadAlli/go-simple-boilerplate/config"
 	"github.com/achmadAlli/go-simple-boilerplate/infrastructures/database"
+	"github.com/achmadAlli/go-simple-boilerplate/infrastructures/validator"
 	"github.com/achmadAlli/go-simple-boilerplate/usecases/user_usecase"
 )
 
 func ProvideUserHandler() *handler.UserHandler {
+	playground := validator.NewPlaygroundValidator()
+
 	fetchPresenter := user_presenters.NewFetchUserPresenter()
 	creationPresenter := user_presenters.NewCreateUserPresenter()
 	userRepo := sql.NewUserRepository(database.NewTransaction(config.DBConfig.GetUserDB()))
@@ -20,5 +23,6 @@ func ProvideUserHandler() *handler.UserHandler {
 	return handler.NewUserHandler(
 		createUserUsecase,
 		fetchUserUsecase,
+		playground,
 	)
 }
