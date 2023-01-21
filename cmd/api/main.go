@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/achmadAlli/go-simple-boilerplate/adapters/api"
+	"github.com/achmadAlli/go-simple-boilerplate/adapters/api/utils"
 	"github.com/achmadAlli/go-simple-boilerplate/config"
 	"github.com/achmadAlli/go-simple-boilerplate/infrastructures/database"
 	"github.com/labstack/echo/v4"
@@ -18,6 +19,9 @@ func main() {
 	loadDatabase()
 
 	e := echo.New()
+
+	// register error handler
+	utils.ListenAppError(e)
 
 	// register the route
 	api.RegisterRoute(e)

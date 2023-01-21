@@ -41,8 +41,7 @@ func (h UserHandler) Store(ctx echo.Context) error {
 	}
 
 	if err := h.validator.Validate(request.CreateUser(req)); err != nil {
-		validationErr, _ := err.(*validator.ValidationError)
-		return ctx.JSON(http.StatusBadRequest, utils.NewErrValidation(validationErr.ErrData, validationErr.Error()))
+		return err
 	}
 
 	user, err := h.createUsecase.CreateUser(c, user_usecase.CreateUserInput{
