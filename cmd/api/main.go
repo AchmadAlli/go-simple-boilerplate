@@ -9,11 +9,13 @@ import (
 
 	"github.com/achmadAlli/go-simple-boilerplate/adapters/api"
 	"github.com/achmadAlli/go-simple-boilerplate/config"
+	"github.com/achmadAlli/go-simple-boilerplate/infrastructures/database"
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
 	config.LoadEnv()
+	loadDatabase()
 
 	e := echo.New()
 
@@ -37,4 +39,11 @@ func main() {
 	if err := e.Shutdown(ctx); err != nil {
 		panic(err)
 	}
+}
+
+func loadDatabase() {
+	config.LoadDBConfig()
+	userDB := database.NewMysqlInstance(config.GetEnv().MySQLEnv)
+
+	config.DBConfig.SetUserDB(userDB)
 }

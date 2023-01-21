@@ -7,13 +7,23 @@ import (
 	"github.com/spf13/viper"
 )
 
+type MySQLEnv struct {
+	Host     string `mapstructure:"SQL_HOST"`
+	Port     int    `mapstructure:"SQL_PORT"`
+	Username string `mapstructure:"SQL_USERNAME"`
+	Password string `mapstructure:"SQL_PASSWORD"`
+	Schema   string `mapstructure:"SQL_SCHEMA"`
+	Debug    bool   `mapstructure:"SQL_DEBUG"`
+}
+
 type appENV struct {
-	Name       string `mapstructure:"APP_NAME"`
-	Port       int    `mapstructure:"APP_PORT"`
-	Address    string `mapstructure:"APP_ADDRESS"`
-	Identifier string `mapstructure:"APP_IDENTIFIER"`
-	ENV        string `mapstructure:"APP_ENV"`
-	Debug      bool   `mapstructure:"APP_DEBUG"`
+	Name       string   `mapstructure:"APP_NAME"`
+	Port       int      `mapstructure:"APP_PORT"`
+	Address    string   `mapstructure:"APP_ADDRESS"`
+	Identifier string   `mapstructure:"APP_IDENTIFIER"`
+	ENV        string   `mapstructure:"APP_ENV"`
+	Debug      bool     `mapstructure:"APP_DEBUG"`
+	MySQLEnv   MySQLEnv `mapstructure:",squash"`
 }
 
 var env = new(appENV)

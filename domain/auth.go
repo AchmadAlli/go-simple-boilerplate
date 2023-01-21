@@ -1,4 +1,4 @@
-package constants
+package domain
 
 import "errors"
 
@@ -11,3 +11,12 @@ var (
 	ErrTokenExpired        = errors.New("token expired")
 	ErrApiKeyNotProvided   = errors.New("api key not provided")
 )
+
+type Auth struct {
+	Email    string `json:"email"`
+	Password string `json:"-"`
+}
+
+type AuthUsecase interface {
+	Authenticate(auth Auth) error
+}
