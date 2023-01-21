@@ -6,6 +6,7 @@ import (
 
 	"github.com/achmadAlli/go-simple-boilerplate/adapters/api/utils"
 	"github.com/achmadAlli/go-simple-boilerplate/adapters/api/v1/request"
+	"github.com/achmadAlli/go-simple-boilerplate/adapters/validator"
 	"github.com/achmadAlli/go-simple-boilerplate/usecases/user_usecase"
 	"github.com/labstack/echo/v4"
 	"golang.org/x/net/context"
@@ -14,12 +15,18 @@ import (
 type UserHandler struct {
 	createUsecase user_usecase.CreateUserUsecase
 	fetchUsecase  user_usecase.FetchUserUsecase
+	validator     validator.Validator
 }
 
-func NewUserHandler(createUsecase user_usecase.CreateUserUsecase, fetchUsecase user_usecase.FetchUserUsecase) *UserHandler {
+func NewUserHandler(
+	createUsecase user_usecase.CreateUserUsecase,
+	fetchUsecase user_usecase.FetchUserUsecase,
+	validator validator.Validator,
+) *UserHandler {
 	return &UserHandler{
 		createUsecase: createUsecase,
 		fetchUsecase:  fetchUsecase,
+		validator:     validator,
 	}
 }
 
@@ -31,6 +38,11 @@ func (h UserHandler) Store(ctx echo.Context) error {
 
 	if err := ctx.Bind(&req); err != nil {
 		return err
+	}
+
+	if err := h.validator.Validate(request.CreateUser(req)); err != nil {
+		validationErr, _ := err.(*validator.ValidationError)
+		return ctx.JSON(http.StatusBadRequest, utils.NewErrValidation(validationErr.ErrData, validationErr.Error()))
 	}
 
 	user, err := h.createUsecase.CreateUser(c, user_usecase.CreateUserInput{
