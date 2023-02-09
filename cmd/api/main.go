@@ -12,6 +12,7 @@ import (
 	"github.com/achmadAlli/go-simple-boilerplate/config"
 	"github.com/achmadAlli/go-simple-boilerplate/infrastructures/database"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -22,6 +23,7 @@ func main() {
 
 	// register error handler
 	utils.ListenAppError(e)
+	e.Use(middleware.CORS())
 
 	// register the route
 	api.RegisterRoute(e)
